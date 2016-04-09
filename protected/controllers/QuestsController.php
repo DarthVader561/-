@@ -38,12 +38,13 @@ class QuestsController extends Controller
 	{
 		$modelQuest = Quests::model()->findByPk($id);
 		$modelPages = new Page();
-		$modelPages->quests_id = $id;
+	/*	$modelPages->quests_id = $id;
+		$modelPages->text=$_POST['page']['text'];*/
 		$this->render('EditQuests',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages));
 	}
 
 	public function actionAddPage(){
-
+var_dump($_GET);
 
 	}
 

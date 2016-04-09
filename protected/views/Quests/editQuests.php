@@ -28,24 +28,55 @@ $this->breadcrumbs=array(
 </div>
 </div>
 <?
-echo CHtml::button('Добавить страницу',array('id'=>'addPage'))
+echo CHtml::button('Добавить страницу',array('id'=>'addPage'));
+echo CHtml::button('Добавить кнопку',array('id'=>'addButton'));
 ?>
+<div class="button" id="button">
 
-
+</div>
 
 <?
 Yii::app()->getClientScript()->registerCoreScript('jquery');
 ?>
 <script>
+	//тут мы добавляем страничку квеста
+
 	$("#addPage").click(function(){
+		attrBut();
+
 		$.ajax({
 				type:"get",
 				url:"/Quests/addPage",
-				data:"idQ=1",
+				data:"test=>"+arrBut,
 				resonse:"text",
 				success: function(data){
 					$("#redactor").html(data)
 				}
 			}
-		)})
+		)
+	});
+		//тут мы добавляем кнопки
+	$("#addButton").click(function(){
+		var div = document.getElementById('button');
+		var elems = div.getElementsByTagName('*');
+		var nextID=(elems.length)+1;
+		page=prompt("Станичка");
+		$("div.button").append("<button id=0>Кнопка</button>");
+		$("#0").attr('id',nextID)
+		$("#"+nextID).attr('idpage',page)
+	});
+
+		//тут собираеам атрибуты кнопки
+	attrBut = function () {
+		var div = document.getElementById('button');
+		var elems = div.getElementsByTagName('*');
+		for (var i = 0; i < elems.length; i++) {
+			var arrBut = {};
+			var key = i;
+			arrBut['but' + key]={
+				idPage : $(elems[i]).attr('idpage')
+			};
+
+	}
+	}
 </script>
