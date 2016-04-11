@@ -42,12 +42,13 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 	//тут мы добавляем страничку квеста
 
 	$("#addPage").click(function(){
-		attrBut();
-
+		arrBut=attrBut();
+		var t= {name : "test",
+		age: 22};
 		$.ajax({
 				type:"get",
 				url:"/Quests/addPage",
-				data:"test=>"+arrBut,
+				data: 'but='+JSON.stringify(arrBut),
 				resonse:"text",
 				success: function(data){
 					$("#redactor").html(data)
@@ -76,7 +77,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 			arrBut['but' + key]={
 				idPage : $(elems[i]).attr('idpage')
 			};
-
+			return arrBut;
 	}
 	}
 </script>
