@@ -43,16 +43,13 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 
 	$("#addPage").click(function(){
 		arrBut=attrBut();
-		var t= {name : "test",
-		age: 22};
-		alert(JSON.stringify(arrBut))
 		$.ajax({
 				type:"get",
 				url:"/Quests/addPage",
-				data: 'but='+JSON.stringify(arrBut),
-				resonse:"text",
+				data: {'button':JSON.stringify(arrBut),'text':$("#Page_text").val(),'idQuests':<? echo $id; ?>},
+				response:"text",
 				success: function(data){
-					$("#redactor").html(data)
+					$("#button").html(data)
 				}
 			}
 		)

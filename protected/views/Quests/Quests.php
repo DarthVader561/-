@@ -22,12 +22,20 @@ $this->breadcrumbs=array(
 		'dataProvider' => $modelQuest->search(),
 		'columns' => array(
 			array(
-				'name' => 'name',
+				'name' => 'red',
 				'type' => 'raw',
 				'value' =>
 					 'CHtml::link($data->name,
 	array("Quests/editQuests","id" => $data->id))'
 			),
+			array(
+				'name' => 'review',
+				'type' => 'raw',
+				'value' =>
+					'CHtml::link($data->name,
+	array("Quests/reviewQuests","id" => $data->id))'
+			),
+
 		)
 	));
 	?>

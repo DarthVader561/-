@@ -28,7 +28,7 @@ class Page extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('quests_id, button, text', 'required'),
-			array('quests_id, button', 'numerical', 'integerOnly'=>true),
+			array('quests_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, quests_id, button, text', 'safe', 'on'=>'search'),

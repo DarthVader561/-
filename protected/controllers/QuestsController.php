@@ -40,16 +40,28 @@ class QuestsController extends Controller
 		$modelPages = new Page();
 	/*	$modelPages->quests_id = $id;
 		$modelPages->text=$_POST['page']['text'];*/
-		$this->render('EditQuests',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages));
+		$this->render('EditQuests',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
 	}
 
-	public function actionAddPage(){
-		//echo json_decode($_GET['but']["but0"],true);
-		$test=json_decode($_GET['but'],true);
-		var_dump($test);
-		//var_dump($test);
-
+	public function actionAddPage()
+	{
+		$page = new Page();
+		$page->button = $_GET['button'];
+		$page->quests_id = json_decode($_GET['idQuests'], true);
+		$page->text = $_GET['text'];
+		$page->save();
 	}
+
+	public function actionReviewQuests($id)
+	{
+		$modelQuest = Quests::model()->findByPk($id);
+		$modelPages =  Page::model()->find('quests_id='.$id);
+		/*	$modelPages->quests_id = $id;
+            $modelPages->text=$_POST['page']['text'];*/
+		$this->render('ReviewQuests',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
+	}
+
+
 
 
 }
