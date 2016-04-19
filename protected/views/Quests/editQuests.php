@@ -45,6 +45,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		arrBut=attrBut();
 		var t= {name : "test",
 		age: 22};
+		alert(JSON.stringify(arrBut))
 		$.ajax({
 				type:"get",
 				url:"/Quests/addPage",
@@ -63,7 +64,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		var nextID=(elems.length)+1;
 		page=prompt("Станичка");
 		$("div.button").append("<button id=0>Кнопка</button>");
-		$("#0").attr('id',nextID)
+		$("#0").attr('id',nextID);
 		$("#"+nextID).attr('idpage',page)
 	});
 
@@ -71,13 +72,13 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 	attrBut = function () {
 		var div = document.getElementById('button');
 		var elems = div.getElementsByTagName('*');
+		var arrBut = {};
 		for (var i = 0; i < elems.length; i++) {
-			var arrBut = {};
-			var key = i;
-			arrBut['but' + key]={
-				idPage : $(elems[i]).attr('idpage')
+			key = i+1;
+			arrBut['but' + key] = {
+				idPage: $(elems[i]).attr('idpage')
 			};
-			return arrBut;
-	}
+		}
+		return arrBut;
 	}
 </script>

@@ -46,8 +46,8 @@ class QuestsController extends Controller
 	public function actionAddPage(){
 		//echo json_decode($_GET['but']["but0"],true);
 		$test=json_decode($_GET['but'],true);
+		var_dump($test);
 		//var_dump($test);
-		var_dump($test['but0']);
 
 	}
 
