@@ -22,14 +22,16 @@ $this->breadcrumbs=array(
 	<?
 	echo CHtml::label('Текст','text');
 	echo $form->textArea($modelPages, 'text');
+	echo $form->label($modelPages,'id_page');
+	echo $form->textField($modelPages, 'id_page');
 	$this->endWidget();
-
 	?>
 </div>
 </div>
 <?
 echo CHtml::button('Добавить страницу',array('id'=>'addPage'));
 echo CHtml::button('Добавить кнопку',array('id'=>'addButton'));
+
 ?>
 <div class="button" id="button">
 
@@ -46,7 +48,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		$.ajax({
 				type:"get",
 				url:"/Quests/addPage",
-				data: {'button':JSON.stringify(arrBut),'text':$("#Page_text").val(),'idQuests':<? echo $id; ?>},
+				data: {'button':JSON.stringify(arrBut),'text':$("#Page_text").val(),'idQuests':<? echo $id; ?>,'id_page':$("#Page_id_page").val()},
 				response:"text",
 				success: function(data){
 					$("#button").html(data)

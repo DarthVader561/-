@@ -46,9 +46,11 @@ class QuestsController extends Controller
 	public function actionAddPage()
 	{
 		$page = new Page();
+
 		$page->button = $_GET['button'];
 		$page->quests_id = json_decode($_GET['idQuests'], true);
 		$page->text = $_GET['text'];
+		$page->id_page=$_GET['id_page'];
 		$page->save();
 	}
 

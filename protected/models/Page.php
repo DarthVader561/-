@@ -6,8 +6,9 @@
  * The followings are the available columns in table 'page':
  * @property integer $id
  * @property integer $quests_id
- * @property integer $button
+ * @property string $button
  * @property string $text
+ * @property integer $id_page
  */
 class Page extends CActiveRecord
 {
@@ -27,11 +28,13 @@ class Page extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('quests_id, button, text', 'required'),
-			array('quests_id', 'numerical', 'integerOnly'=>true),
+			array('quests_id, id_page', 'required'),
+			array('quests_id, id_page', 'numerical', 'integerOnly'=>true),
+			array('button', 'length', 'max'=>500),
+			array('text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, quests_id, button, text', 'safe', 'on'=>'search'),
+			array('id, quests_id, button, text, id_page', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,6 +59,7 @@ class Page extends CActiveRecord
 			'quests_id' => 'Quests',
 			'button' => 'Button',
 			'text' => 'Text',
+			'id_page' => 'Id Page',
 		);
 	}
 
@@ -79,8 +83,9 @@ class Page extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('quests_id',$this->quests_id);
-		$criteria->compare('button',$this->button);
+		$criteria->compare('button',$this->button,true);
 		$criteria->compare('text',$this->text,true);
+		$criteria->compare('id_page',$this->id_page);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
