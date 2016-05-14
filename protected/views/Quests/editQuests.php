@@ -2,7 +2,7 @@
 /* @var $this SiteController */
 /* @var $model ContactForm */
 /* @var $form CActiveForm */
-
+Yii::import('ext.imperavi-redactor-widget.ImperaviRedactorWidget');
 $this->pageTitle=Yii::app()->name . ' - Квест';
 $this->breadcrumbs=array(
 	'Квест',
@@ -21,7 +21,20 @@ $this->breadcrumbs=array(
 <div class="row">
 	<?
 	echo CHtml::label('Текст','text');
-	echo $form->textArea($modelPages, 'text');
+	$this->widget('ImperaviRedactorWidget', array(
+		//используем модель
+		'model' => $modelPages, //модель
+		'attribute' => 'text', //имя поля
+		//или просто для поля ввода 'name' => 'inputName',
+		'name' => 'my_input_name',
+		// Настройки виджета, подробнее: http://imperavi.com/redactor/docs/
+		'options' => array(
+			'lang' => 'en',
+			'toolbar' => true,
+			'iframe' => true,
+			'Width' => '400px'
+		),
+	));
 	echo $form->label($modelPages,'id_page');
 	echo $form->textField($modelPages, 'id_page');
 	$this->endWidget();
@@ -38,6 +51,17 @@ echo CHtml::button('Добавить кнопку',array('id'=>'addButton'));
 </div>
 
 <?
+$this->widget('zii.widgets.grid.CGridView', array(
+	'dataProvider' => $data,
+	'columns' => array(
+		array(
+			'name' => 'id_page',
+			'type' => 'raw',
+
+		),
+
+	)
+));
 Yii::app()->getClientScript()->registerCoreScript('jquery');
 ?>
 <script>
@@ -48,13 +72,14 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		$.ajax({
 				type:"get",
 				url:"/Quests/addPage",
-				data: {'button':JSON.stringify(arrBut),'text':$("#Page_text").val(),'idQuests':<? echo $id; ?>,'id_page':$("#Page_id_page").val()},
+				data: {'button':JSON.stringify(arrBut),'text':$("#my_input_name").val(),'idQuests':<? echo $id; ?>,'id_page':$("#Page_id_page").val()},
 				response:"text",
 				success: function(data){
 					$("#button").html(data)
 				}
 			}
-		)
+		),
+		location.reload()
 	});
 		//тут мы добавляем кнопки
 	$("#addButton").click(function(){

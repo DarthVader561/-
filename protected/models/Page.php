@@ -75,18 +75,20 @@ class Page extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($id=null)
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id);
-		$criteria->compare('quests_id',$this->quests_id);
-		$criteria->compare('button',$this->button,true);
-		$criteria->compare('text',$this->text,true);
-		$criteria->compare('id_page',$this->id_page);
-
+		if($id!=null){
+			$criteria->compare('quests_id',$id);
+		} else {
+			$criteria->compare('id', $this->id);
+			$criteria->compare('quests_id', $this->quests_id);
+			$criteria->compare('button', $this->button, true);
+			$criteria->compare('text', $this->text, true);
+			$criteria->compare('id_page', $this->id_page);
+		}
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
