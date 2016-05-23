@@ -39,29 +39,45 @@ class QuestsController extends Controller
 		$modelQuest = Quests::model()->findByPk($id);
 		$modelPages = new Page();
 		$thisPage=$modelPages->search($id);
-	/*	$modelPages->quests_id = $id;
-		$modelPages->text=$_POST['page']['text'];*/
-		$this->render('EditQuests',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id, 'data'=>$thisPage));
-	}
-
-	public function actionEditPage($id)
-	{
-		$modelQuest = Quests::model()->findByPk($id);
-		$modelPages = new Page();
-		$thisPage=$modelPages->search($id);
 		/*	$modelPages->quests_id = $id;
             $modelPages->text=$_POST['page']['text'];*/
 		$this->render('EditQuests',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id, 'data'=>$thisPage));
 	}
 
-	public function actionAddPage()
+	public function actionAddPage($id)
 	{
-		$page = new Page();
-		$page->button = $_GET['button'];
+		$modelQuest = Quests::model()->findByPk($id);
+		$modelPages = new Page();
+	/*	$modelPages->quests_id = $id;
+		$modelPages->text=$_POST['page']['text'];*/
+		$this->render('AddPage',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
+	}
+
+	public function actionEditPage($id)
+	{
+		$modelQuest = Quests::model()->findByPk($id);
+		$modelPages = Page::model()->findByPk($id);
+		if(Yii::app()->request->isAjaxRequest){
+			//var_dump($_GET);
+		/*	$modelPages->button = $_GET['button'];
+			$modelPages->quests_id = json_decode($_GET['idQuests'], true);
+			$modelPages->text = $_GET['text'];
+			$modelPages->id_page=$_GET['id_page'];*/
+		}
+		$this->render('EditPage',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
+	}
+
+	public function actionAddPageAj()
+	{
+
+		//$id=$_GET['idPage'];
+		//$page = isset($id) ? Page::model()->findAllByPk($id) : new Page();
+		/*$page->button = $_GET['button'];
 		$page->quests_id = json_decode($_GET['idQuests'], true);
 		$page->text = $_GET['text'];
-		$page->id_page=$_GET['id_page'];
-		$page->save();
+		$page->id_page=$_GET['id_page'];*/
+		//var_dump($page);die;
+		//$page->save();
 	}
 
 	public function actionReviewQuests($id)
