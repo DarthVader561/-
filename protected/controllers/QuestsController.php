@@ -48,6 +48,17 @@ class QuestsController extends Controller
 	{
 		$modelQuest = Quests::model()->findByPk($id);
 		$modelPages = new Page();
+
+		if(isset($_POST['Page'])){
+
+			$modelPages->button=$_POST['Page']['button'];
+			$modelPages->text=$_POST['Page']['text'];
+			$modelPages->quests_id=$id;
+			if($modelPages->validate()){
+				$modelPages->save();
+			}
+
+		}
 	/*	$modelPages->quests_id = $id;
 		$modelPages->text=$_POST['page']['text'];*/
 		$this->render('AddPage',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));

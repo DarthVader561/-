@@ -12,6 +12,8 @@
  */
 class Page extends CActiveRecord
 {
+
+	public $button;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -28,13 +30,13 @@ class Page extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('quests_id, id_page', 'required'),
-			array('quests_id, id_page', 'numerical', 'integerOnly'=>true),
+			array('quests_id,', 'required'),
+			array('quests_id,', 'numerical', 'integerOnly'=>true),
 			array('button', 'length', 'max'=>500),
 			array('text', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, quests_id, button, text, id_page', 'safe', 'on'=>'search'),
+			array('id, quests_id, button, text, ', 'safe', 'on'=>'search'),
 		);
 	}
 

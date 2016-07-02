@@ -10,19 +10,21 @@ $this->breadcrumbs=array(
 ?>
 
 <h1>Создание квестов</h1>
+<div class="form">
 	<?php $form=$this->beginWidget('CActiveForm');?>
 <div class="row">
 	<?
 	echo $form->label($modelQuest,'name',array('title'=>'имя'));
 	echo $form->textField($modelQuest,'name');
+	echo  CHtml::submitButton('Создать');
 	?>
 	</div>
 	<?
-	echo CHtml::submitButton('Создать');
+
 	$this->endWidget();
 	echo CHtml::button('ajax',array('id'=>'12'))
 	?>
-
+</div>
 <div id="redactor">
 
 </div>

@@ -35,14 +35,15 @@ $this->breadcrumbs=array(
 			'Width' => '400px'
 		),
 	));
-	echo $form->label($modelPages,'id_page');
-	echo $form->textField($modelPages, 'id_page');
+	echo $form->label($modelPages,'id');
+	echo $form->hiddenField($modelPages,'button');
+	echo  CHtml::submitButton('Создать');
 	$this->endWidget();
 	?>
 </div>
 </div>
 <?
-echo CHtml::button('Добавить страницу',array('id'=>'addPage'));
+
 echo CHtml::button('Добавить кнопку',array('id'=>'addButton'));
 
 ?>
@@ -57,7 +58,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 <script>
 	//тут мы добавляем страничку квеста
 
-	$("#addPage").click(function(){
+	/*$("#addPage").click(function(){
 		arrBut=attrBut();
 		$.ajax({
 				type:"get",
@@ -70,7 +71,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 			}
 		),
 		location.reload()
-	});
+	});*/
 		//тут мы добавляем кнопки
 	$("#addButton").click(function(){
 		var div = document.getElementById('button');
@@ -80,6 +81,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		$("div.button").append("<button id=0>Кнопка</button>");
 		$("#0").attr('id',nextID);
 		$("#"+nextID).attr('idpage',page)
+		attrBut()
 	});
 
 		//тут собираеам атрибуты кнопки
@@ -93,6 +95,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 				idPage: $(elems[i]).attr('idpage')
 			};
 		}
-		return arrBut;
+		$("#Page_button").val(JSON.stringify(arrBut))
+
 	}
 </script>
