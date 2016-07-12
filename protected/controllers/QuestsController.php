@@ -66,8 +66,10 @@ class QuestsController extends Controller
 
 	public function actionEditPage($id)
 	{
-		$modelQuest = Quests::model()->findByPk($id);
 		$modelPages = Page::model()->findByPk($id);
+		$modelQuest = $modelPages->quests;
+
+
 		if(isset($_POST['Page'])){
 
 			$modelPages->button=$_POST['Page']['button'];
@@ -80,19 +82,6 @@ class QuestsController extends Controller
 		}
 
 		$this->render('EditPage',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
-	}
-
-	public function actionAddPageAj()
-	{
-
-		//$id=$_GET['idPage'];
-		//$page = isset($id) ? Page::model()->findAllByPk($id) : new Page();
-		/*$page->button = $_GET['button'];
-		$page->quests_id = json_decode($_GET['idQuests'], true);
-		$page->text = $_GET['text'];
-		$page->id_page=$_GET['id_page'];*/
-		//var_dump($page);die;
-		//$page->save();
 	}
 
 	public function actionReviewQuests($id)

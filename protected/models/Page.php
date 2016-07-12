@@ -9,11 +9,12 @@
  * @property string $button
  * @property string $text
  * @property integer $id_page
+ *
+ * The followings are the available model relations:
+ * @property Quests $quests
  */
 class Page extends CActiveRecord
 {
-
-	public $button;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -30,13 +31,12 @@ class Page extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('quests_id,', 'required'),
-			array('quests_id,', 'numerical', 'integerOnly'=>true),
-			array('button', 'length', 'max'=>500),
-			array('text', 'safe'),
+			array('text', 'required'),
+			array('quests_id, id_page', 'numerical', 'integerOnly'=>true),
+			array('button', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, quests_id, button, text, ', 'safe', 'on'=>'search'),
+			array('id, quests_id, button, text, id_page', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,6 +48,7 @@ class Page extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'quests' => array(self::BELONGS_TO, 'Quests', 'quests_id'),
 		);
 	}
 
@@ -77,20 +78,18 @@ class Page extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search($id=null)
+	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		if($id!=null){
-			$criteria->compare('quests_id',$id);
-		} else {
-			$criteria->compare('id', $this->id);
-			$criteria->compare('quests_id', $this->quests_id);
-			$criteria->compare('button', $this->button, true);
-			$criteria->compare('text', $this->text, true);
-			$criteria->compare('id_page', $this->id_page);
-		}
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('quests_id',$this->quests_id);
+		$criteria->compare('button',$this->button,true);
+		$criteria->compare('text',$this->text,true);
+		$criteria->compare('id_page',$this->id_page);
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

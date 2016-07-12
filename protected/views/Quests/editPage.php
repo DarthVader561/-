@@ -13,6 +13,7 @@ $this->breadcrumbs=array(
 	<?php $form=$this->beginWidget('CActiveForm');?>
 <div class="row">
 	<?
+
 	echo CHtml::label($modelQuest->name,'name');
 
 	?>
