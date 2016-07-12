@@ -53,9 +53,12 @@ $this->endWidget();
 ?>
 <div class="button" id="button">
 	<?
+
 	$buttonn=json_decode($modelPages->button,true);
-	foreach($buttonn as $button){
-	echo CHtml::button('На страницу'.$button['idPage'],array('label'=>'На страницу'.$button['idPage'], 'idPage'=>$button['idPage']));
+	if($buttonn) {
+		foreach ($buttonn as $button) {
+			echo CHtml::button('На страницу' . $button['idPage'], array('label' => 'На страницу' . $button['idPage'], 'idPage' => $button['idPage']));
+		}
 	}
 	?>
 </div>

@@ -56,6 +56,7 @@ class QuestsController extends Controller
 			$modelPages->quests_id=$id;
 			if($modelPages->validate()){
 				$modelPages->save();
+				$this->redirect('/Quests/editQuests/'.$id);
 			}
 
 		}
@@ -77,6 +78,7 @@ class QuestsController extends Controller
 
 			if($modelPages->validate()){
 				$modelPages->save();
+				$this->redirect('/Quests/editQuests/'.$modelQuest->id);
 			}
 
 		}
