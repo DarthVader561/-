@@ -77,14 +77,16 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		var div = document.getElementById('button');
 		var elems = div.getElementsByTagName('*');
 		var nextID=(elems.length)+1;
-		page=prompt("Станичка");
-		$("div.button").append("<button id=0>Кнопка</button>");
+		page = prompt("Станичка");
+		text = prompt("текст кнопки");
+		$("div.button").append("<button id=0>text</button>");
 		$("#0").attr('id',nextID);
 		$("#"+nextID).attr('idpage',page)
 		attrBut()
 	});
 
-		//тут собираеам атрибуты кнопки
+
+	//тут собираеам атрибуты кнопки
 	attrBut = function () {
 		var div = document.getElementById('button');
 		var elems = div.getElementsByTagName('*');
@@ -92,7 +94,8 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		for (var i = 0; i < elems.length; i++) {
 			key = i+1;
 			arrBut['but' + key] = {
-				idPage: $(elems[i]).attr('idpage')
+				idPage: $(elems[i]).attr('idpage'),
+				text: $(elems[i]).text()
 			};
 		}
 		$("#Page_button").val(JSON.stringify(arrBut))

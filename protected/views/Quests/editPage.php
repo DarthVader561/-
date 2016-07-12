@@ -57,7 +57,7 @@ $this->endWidget();
 	$buttonn=json_decode($modelPages->button,true);
 	if($buttonn) {
 		foreach ($buttonn as $button) {
-			echo CHtml::button('На страницу' . $button['idPage'], array('label' => 'На страницу' . $button['idPage'], 'idPage' => $button['idPage']));
+			echo CHtml::button($button['text'], array('label' => $button['text'] . $button['idPage'], 'idPage' => $button['idPage']));
 		}
 	}
 	?>
@@ -93,7 +93,8 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		var elems = div.getElementsByTagName('*');
 		var nextID=(elems.length)+1;
 		page=prompt("Станичка");
-		$("div.button").append("<button id=0>Кнопка</button>");
+		text = prompt("текст кнопки");
+		$("div.button").append("<button id=0>text</button>");
 		$("#0").attr('id',nextID);
 		$("#"+nextID).attr('idpage',page)
 		attrBut()
@@ -107,7 +108,8 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		for (var i = 0; i < elems.length; i++) {
 			key = i+1;
 			arrBut['but' + key] = {
-				idPage: $(elems[i]).attr('idpage')
+				idPage: $(elems[i]).attr('idpage'),
+				text: $(elems[i]).text()
 			};
 		}
 		$("#Page_button").val(JSON.stringify(arrBut))
