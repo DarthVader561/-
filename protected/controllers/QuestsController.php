@@ -68,13 +68,17 @@ class QuestsController extends Controller
 	{
 		$modelQuest = Quests::model()->findByPk($id);
 		$modelPages = Page::model()->findByPk($id);
-		if(Yii::app()->request->isAjaxRequest){
-			//var_dump($_GET);
-		/*	$modelPages->button = $_GET['button'];
-			$modelPages->quests_id = json_decode($_GET['idQuests'], true);
-			$modelPages->text = $_GET['text'];
-			$modelPages->id_page=$_GET['id_page'];*/
+		if(isset($_POST['Page'])){
+
+			$modelPages->button=$_POST['Page']['button'];
+			$modelPages->text=$_POST['Page']['text'];
+
+			if($modelPages->validate()){
+				$modelPages->save();
+			}
+
 		}
+
 		$this->render('EditPage',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
 	}
 

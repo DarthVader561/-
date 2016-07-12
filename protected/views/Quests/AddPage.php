@@ -35,6 +35,7 @@ $this->breadcrumbs=array(
 			'Width' => '400px'
 		),
 	));
+
 	echo $form->label($modelPages,'id');
 	echo $form->hiddenField($modelPages,'button');
 	echo  CHtml::submitButton('Создать');

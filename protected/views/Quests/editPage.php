@@ -9,21 +9,17 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Создание квестов</h1>
+<h1>Редактирование страницы</h1>
 	<?php $form=$this->beginWidget('CActiveForm');?>
 <div class="row">
 	<?
 	echo CHtml::label($modelQuest->name,'name');
-	$modelPages->button=json_decode($modelPages->button,true);
-	foreach($modelPages->button as $button){
-		echo CHtml::button('На страницу'.$button['idPage'],array('label'=>'На страницу'.$button['idPage'], 'idPage'=>$button['idPage']));
-	}
+
 	?>
 	</div>
 <div id="redactor">
 <div class="row">
 	<?
-	echo CHtml::label('Текст','text');
 	$this->widget('ImperaviRedactorWidget', array(
 		//используем модель
 		'model' => $modelPages, //модель
@@ -38,19 +34,29 @@ $this->breadcrumbs=array(
 			'Width' => '400px'
 		),
 	));
-	echo $form->label($modelPages,'id_page');
-	echo $form->textField($modelPages, 'id_page');
-	$this->endWidget();
+
+
+
 	?>
 </div>
 </div>
 <?
-echo CHtml::button('Отрелактировать страницу',array('id'=>'addPage'));
 echo CHtml::button('Добавить кнопку',array('id'=>'addButton'));
+echo $form->hiddenField($modelPages,'button');
+echo  CHtml::submitButton('Отредактировать');
+$this->endWidget();
+
+
+
 
 ?>
 <div class="button" id="button">
-
+	<?
+	$buttonn=json_decode($modelPages->button,true);
+	foreach($buttonn as $button){
+	echo CHtml::button('На страницу'.$button['idPage'],array('label'=>'На страницу'.$button['idPage'], 'idPage'=>$button['idPage']));
+	}
+	?>
 </div>
 
 <?
@@ -64,7 +70,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 
 	//тут мы добавляем страничку квеста
 
-	$("#addPage").click(function(){
+/*	$("#addPage").click(function(){
 		arrBut=attrBut();
 		$.ajax({
 				type:"get",
@@ -76,7 +82,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 				}
 			}
 		)
-	});
+	});*/
 		//тут мы добавляем кнопки
 	$("#addButton").click(function(){
 		var div = document.getElementById('button');
@@ -86,6 +92,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 		$("div.button").append("<button id=0>Кнопка</button>");
 		$("#0").attr('id',nextID);
 		$("#"+nextID).attr('idpage',page)
+		attrBut()
 	});
 
 		//тут собираеам атрибуты кнопки
@@ -99,6 +106,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 				idPage: $(elems[i]).attr('idpage')
 			};
 		}
-		return arrBut;
+		$("#Page_button").val(JSON.stringify(arrBut))
 	}
+	attrBut()
 </script>
