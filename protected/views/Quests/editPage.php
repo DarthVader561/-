@@ -46,22 +46,32 @@ echo CHtml::button('Добавить кнопку',array('id'=>'addButton'));
 echo $form->hiddenField($modelPages,'button');
 echo  CHtml::submitButton('Отредактировать');
 $this->endWidget();
-
-
-
-
 ?>
-<div class="button" id="button">
-	<?
+<div class="button"">
+	<div class="button" id="buttonQuests">
+		<?
 
-	$buttonn=json_decode($modelPages->button,true);
-	if($buttonn) {
-		foreach ($buttonn as $button) {
-			echo CHtml::button($button['text'], array('label' => $button['text'] . $button['idPage'], 'idPage' => $button['idPage']));
+		$buttonn=json_decode($modelPages->button,true);
+		if($buttonn) {
+
+			foreach ($buttonn as $id => $button) {
+				echo CHtml::button($button['text'], array('label' => $button['text'] . $button['idPage'], 'idPage' => $button['idPage'], 'id' => $id));
+			}
 		}
-	}
+	?>
+	</div>
+	<div class="button" id="redactButton" redact="none" style="display: none">
+		<?
+		echo CHtml::button('Имя',array('id' => 'text'));
+		echo CHtml::button('Id',array('id' => 'idPage')) . '<br>';
+		?>
+	</div>
+	<?
+	echo CHtml::textField('attrRedac','',array('style' => 'display: none','attribut'=>''))
 	?>
 </div>
+
+
 
 <?
 
@@ -87,22 +97,49 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 			}
 		)
 	});*/
+	redactAttr = function()  {
+		$("#attrRedac").bind('change', function(){
+			$("#text").attr('value','12');
+		});
+	}
+	test()
+
+	test = function()  {
+		$("#redactButton input").bind('click', function(){
+			$("#attrRedac").attr('attribut',this.id);
+			$("#attrRedac").show()
+		});
+	}
+	test()
+
+	addButtonEvent = function() {
+		$("#buttonQuests input").bind('click', function(){
+			$("#redactButton").attr('redact',this.id);
+			$("#redactButton").show()
+
+		});
+	};
+	addButtonEvent();
+
 		//тут мы добавляем кнопки
 	$("#addButton").click(function(){
-		var div = document.getElementById('button');
+		var div = document.getElementById('buttonQuests');
 		var elems = div.getElementsByTagName('*');
 		var nextID=(elems.length)+1;
 		page=prompt("Станичка");
 		text = prompt("текст кнопки");
 		$("div.button").append("<button id=0>text</button>");
 		$("#0").attr('id',nextID);
-		$("#"+nextID).attr('idpage',page)
+		$("#"+nextID).attr('idpage',page);
 		attrBut()
+		addButtonEvent()
+
 	});
+
 
 		//тут собираеам атрибуты кнопки
 	attrBut = function () {
-		var div = document.getElementById('button');
+		var div = document.getElementById('buttonQuests');
 		var elems = div.getElementsByTagName('*');
 		var arrBut = {};
 		for (var i = 0; i < elems.length; i++) {
