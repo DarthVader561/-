@@ -74,12 +74,10 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 	});*/
 		//тут мы добавляем кнопки
 	$("#addButton").click(function(){
-		var div = document.getElementById('button');
-		var elems = div.getElementsByTagName('*');
-		var nextID=(elems.length)+1;
+		var nextID = $("#buttonQuests").find('input').length+1;
 		page = prompt("Станичка");
 		text = prompt("текст кнопки");
-		$("div.button").append("<button id=0>text</button>");
+		$("#buttonQuests").append("<input type='button' value="+text+" id=0>");
 		$("#0").attr('id',nextID);
 		$("#"+nextID).attr('idpage',page)
 		attrBut()
@@ -95,7 +93,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 			key = i+1;
 			arrBut['but' + key] = {
 				idPage: $(elems[i]).attr('idpage'),
-				text: $(elems[i]).text()
+				text: $(elems[i]).val()
 			};
 		}
 		$("#Page_button").val(JSON.stringify(arrBut))

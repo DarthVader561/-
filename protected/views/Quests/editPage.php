@@ -59,13 +59,18 @@ $this->endWidget();
 		}
 	?>
 	</div>
-	<div class="button" id="redactButton" redactBut="none" redacAttr="none" style="display: none">
+	<div class="button" id="attrButton" redactBut="none" redacAttr="none" style="display: none">
 		<?
 		echo CHtml::button('Имя',array('id' => 'text'));
 		echo CHtml::button('Id',array('id' => 'idPage')) . '<br>';
-		echo CHtml::textField('attrRedac','',array('style' => 'display: none','attribut'=>''));
+		?>
+		<div class="button" id="redactButton" style="display: none">
+		<?
+		echo CHtml::label('Свойство','');
+		echo CHtml::textField('valAttr','',array('attribut'=>''));
 		echo CHtml::button('Применить',array('id' => 'attrEnter'))
 		?>
+		</div>
 	</div>
 	<?
 
@@ -98,40 +103,51 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 			}
 		)
 	});*/
+
+	//редактирую сво-во кнопки
 		$("#attrEnter").bind('click', function(){
-			switch ($("#redactButton").attr('redacAttr')) {
+			switch ($("#attrButton").attr('redacAttr')) {
+				//перезаписываю сво-во
 				case 'value':
-					$("#"+$("#redactButton").attr('redactBut')).attr('value',$("#attrRedac").val());
+					$("#"+$("#attrButton").attr('redactBut')).attr('value',$("#valAttr").val());
 					attrBut()
 					break;
 				case 'idPage':
-					$("#"+$("#redactButton").attr('redactBut')).attr('idPage',$("#attrRedac").val());
+					$("#"+$("#attrButton").attr('redactBut')).attr('idPage',$("#valAttr").val());
 					attrBut()
 					break;
 			}
-			$("#attrRedac").val("")
+			$("#valAttr").val("")
+			$("#redactButton").hide()
+			$("#attrButton").hide()
 		});
 
 
+	//Добавляю событие на кнопки редактирования
 	$(document).ready(function()  {
-		$("#redactButton input").bind('click', function(){
+		$("#attrButton input").bind('click', function(){
 			switch (this.id) {
+				// в сво-во дива записываю атрибут, который хочу редактировать
 				case 'text':
-					$("#redactButton").attr('redacAttr','value');
+					$("#attrButton").attr('redacAttr','value');
+					$("#attrButton label").text("Название кнопки")
 					break;
 				case 'idPage':
-					$("#redactButton").attr('redacAttr','idPage');
+					$("#attrButton label").text("Направление кнопки")
+					$("#attrButton").attr('redacAttr','idPage');
 					break;
 			}
-			$("#attrRedac").show()
+
+			$("#redactButton").show()
 		});
 	})
 
+	//открываю панель редактирования
 	addButtonEvent = function() {
 		$("#buttonQuests input").bind('click', function(){
-			$("#redactButton").attr('redactBut',this.id);
-
-			$("#redactButton").show()
+			// в сво-во дива записываю id кнопки, которую собираемся редактировать
+			$("#attrButton").attr('redactBut',this.id);
+			$("#attrButton").show()
 
 		});
 	};
@@ -139,12 +155,10 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 
 		//тут мы добавляем кнопки
 	$("#addButton").click(function(){
-		var div = document.getElementById('buttonQuests');
-		var elems = div.getElementsByTagName('*');
-		var nextID=(elems.length)+1;
+		var nextID = $("#buttonQuests").find('input').length+1;
 		page=prompt("Станичка");
 		text = prompt("текст кнопки");
-		$("div.button").append("<button id=0>text</button>");
+		$("#buttonQuests").append("<input type='button' value="+text+" id=0>");
 		$("#0").attr('id',nextID);
 		$("#"+nextID).attr('idpage',page);
 		attrBut()
@@ -155,8 +169,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 
 		//тут собираеам атрибуты кнопки
 	attrBut = function () {
-		var div = document.getElementById('buttonQuests');
-		var elems = div.getElementsByTagName('*');
+		var elems = $("#buttonQuests").find('input');
 		var arrBut = {};
 		for (var i = 0; i < elems.length; i++) {
 			key = i+1;
