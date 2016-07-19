@@ -48,6 +48,7 @@ echo  CHtml::submitButton('Отредактировать');
 $this->endWidget();
 ?>
 <div class="button">
+	<!-- Див с кнопками для квеста -->
 	<div class="button" id="buttonQuests" style="background: #efefef">
 		<?
 
@@ -59,11 +60,13 @@ $this->endWidget();
 		}
 	?>
 	</div>
+	<!-- Див для выбора атрибутиов кнопок -->
 	<div class="button" id="attrButton" redactBut="none" redacAttr="none" style="display: none">
 		<?
 		echo CHtml::button('Имя',array('id' => 'text'));
 		echo CHtml::button('Id',array('id' => 'idPage')) . '<br>';
 		?>
+		<!-- Див для изменения кнопок -->
 		<div class="button" id="redactButton" style="display: none">
 		<?
 		echo CHtml::label('Свойство','');
