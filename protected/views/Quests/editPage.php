@@ -47,27 +47,28 @@ echo $form->hiddenField($modelPages,'button');
 echo  CHtml::submitButton('Отредактировать');
 $this->endWidget();
 ?>
-<div class="button"">
-	<div class="button" id="buttonQuests">
+<div class="button">
+	<div class="button" id="buttonQuests" style="background: #efefef">
 		<?
 
 		$buttonn=json_decode($modelPages->button,true);
 		if($buttonn) {
-
 			foreach ($buttonn as $id => $button) {
 				echo CHtml::button($button['text'], array('label' => $button['text'] . $button['idPage'], 'idPage' => $button['idPage'], 'id' => $id));
 			}
 		}
 	?>
 	</div>
-	<div class="button" id="redactButton" redact="none" style="display: none">
+	<div class="button" id="redactButton" redactBut="none" redacAttr="none" style="display: none">
 		<?
 		echo CHtml::button('Имя',array('id' => 'text'));
 		echo CHtml::button('Id',array('id' => 'idPage')) . '<br>';
+		echo CHtml::textField('attrRedac','',array('style' => 'display: none','attribut'=>''));
+		echo CHtml::button('Применить',array('id' => 'attrEnter'))
 		?>
 	</div>
 	<?
-	echo CHtml::textField('attrRedac','',array('style' => 'display: none','attribut'=>''))
+
 	?>
 </div>
 
@@ -97,24 +98,39 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 			}
 		)
 	});*/
-	redactAttr = function()  {
-		$("#attrRedac").bind('change', function(){
-			$("#text").attr('value','12');
+		$("#attrEnter").bind('click', function(){
+			switch ($("#redactButton").attr('redacAttr')) {
+				case 'value':
+					$("#"+$("#redactButton").attr('redactBut')).attr('value',$("#attrRedac").val());
+					attrBut()
+					break;
+				case 'idPage':
+					$("#"+$("#redactButton").attr('redactBut')).attr('idPage',$("#attrRedac").val());
+					attrBut()
+					break;
+			}
+			$("#attrRedac").val("")
 		});
-	}
-	test()
 
-	test = function()  {
+
+	$(document).ready(function()  {
 		$("#redactButton input").bind('click', function(){
-			$("#attrRedac").attr('attribut',this.id);
+			switch (this.id) {
+				case 'text':
+					$("#redactButton").attr('redacAttr','value');
+					break;
+				case 'idPage':
+					$("#redactButton").attr('redacAttr','idPage');
+					break;
+			}
 			$("#attrRedac").show()
 		});
-	}
-	test()
+	})
 
 	addButtonEvent = function() {
 		$("#buttonQuests input").bind('click', function(){
-			$("#redactButton").attr('redact',this.id);
+			$("#redactButton").attr('redactBut',this.id);
+
 			$("#redactButton").show()
 
 		});
@@ -146,7 +162,7 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 			key = i+1;
 			arrBut['but' + key] = {
 				idPage: $(elems[i]).attr('idpage'),
-				text: $(elems[i]).text()
+				text: $(elems[i]).val()
 			};
 		}
 		$("#Page_button").val(JSON.stringify(arrBut))
