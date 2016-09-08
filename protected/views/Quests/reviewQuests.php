@@ -13,19 +13,29 @@ $this->breadcrumbs=array(
 	<?php $form=$this->beginWidget('CActiveForm');?>
 <div class="row">
 	<?
-	echo CHtml::label($modelQuest->name,'name');
-	echo CHtml::label($modelPages->text,'text')
+	echo CHtml::label($modelPages->quests->name,'name');
+	echo CHtml::label($modelPages->text,'text');
+
 	?>
 	</div>
-<div id="redactor">
-<div class="row">
+
+<div class="button" id="buttonQuests" style="background: #efefef">
 	<?
 
-	$this->endWidget();
-
+	$buttons=json_decode($modelPages->button,true);
+	if($buttons) {
+		foreach ($buttons as $id => $button) {
+			echo CHtml::button($button['text'], array('label' => $button['text'], 'onClick'=>'location.href="/Quests/ReviewQuests/'.$button['idPage'].'"', 'id' => $id));
+		}
+	}
 	?>
 </div>
+<div class="row">
+	<?
+	$this->endWidget();
+	?>
 </div>
+
 <?
 
 ?>

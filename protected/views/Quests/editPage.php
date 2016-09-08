@@ -64,6 +64,7 @@ $this->endWidget();
 	<div class="button" id="attrButton" redactBut="none" redacAttr="none" style="display: none">
 		<?
 		echo CHtml::button('Имя',array('id' => 'text'));
+		echo CHtml::button('Удалить',array('id' => 'del'));
 		echo CHtml::button('Id',array('id' => 'idPage')) . '<br>';
 		?>
 		<!-- Див для изменения кнопок -->
@@ -113,15 +114,15 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 				//перезаписываю сво-во
 				case 'value':
 					$("#"+$("#attrButton").attr('redactBut')).attr('value',$("#valAttr").val());
-					attrBut()
+					attrBut();
 					break;
 				case 'idPage':
 					$("#"+$("#attrButton").attr('redactBut')).attr('idPage',$("#valAttr").val());
-					attrBut()
+					attrBut();
 					break;
 			}
-			$("#valAttr").val("")
-			$("#redactButton").hide()
+			$("#valAttr").val("");
+			$("#redactButton").hide();
 			$("#attrButton").hide()
 		});
 
@@ -133,15 +134,20 @@ Yii::app()->getClientScript()->registerCoreScript('jquery');
 				// в сво-во дива записываю атрибут, который хочу редактировать
 				case 'text':
 					$("#attrButton").attr('redacAttr','value');
-					$("#attrButton label").text("Название кнопки")
+					$("#attrButton label").text("Название кнопки");
+					$("#redactButton").show();
 					break;
 				case 'idPage':
-					$("#attrButton label").text("Направление кнопки")
+					$("#attrButton label").text("Направление кнопки");
 					$("#attrButton").attr('redacAttr','idPage');
+					$("#redactButton").show();
 					break;
+				case 'del':
+					$("#"+$("#attrButton").attr('redactBut')).remove();
+					attrBut();
 			}
 
-			$("#redactButton").show()
+
 		});
 	})
 

@@ -33,7 +33,7 @@ $this->breadcrumbs=array(
 				'type' => 'raw',
 				'value' =>
 					'CHtml::link($data->name,
-	array("Quests/reviewQuests","id" => $data->id))'
+	array("Quests/QuestsInfo","id" => $data->id))'
 			),
 
 		)

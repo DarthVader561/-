@@ -86,13 +86,20 @@ class QuestsController extends Controller
 		$this->render('EditPage',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
 	}
 
-	public function actionReviewQuests($id)
+
+	public function actionQuestsInfo($id)
 	{
 		$modelQuest = Quests::model()->findByPk($id);
-		$modelPages =  Page::model()->find('quests_id='.$id);
 		/*	$modelPages->quests_id = $id;
             $modelPages->text=$_POST['page']['text'];*/
-		$this->render('ReviewQuests',array('modelQuest'=> $modelQuest, 'modelPages' => $modelPages, 'id'=>$id));
+		$this->render('QuestsInfo',array('modelQuest'=> $modelQuest, 'id'=>$id));
+	}
+
+	public function actionReviewQuests($id)
+	{
+		$modelPages =  Page::model()->findByPk($id);
+
+		$this->render('ReviewQuests',array('modelPages' => $modelPages, 'id'=>$id));
 	}
 
 
